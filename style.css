@@ -1,0 +1,287 @@
+@import url('https://googleapis.com');
+
+/* --- PALETA DE CORES OFICIAL DN --- */
+:root {
+    --cor-azul-dn: #005691;       /* Azul oficial do 'D' */
+    --cor-vermelho-dn: #a6192e;   /* Vermelho oficial do 'N' */
+    --cor-roxo-dn: #491361;       /* Roxo da intersecção */
+    
+    --bg-painel: #1c2126;         /* Chumbo escuro corporativo */
+    --bg-display: #0a0d10;        /* Fundo dos displays digitais */
+    --texto-branco: #ffffff;
+    --texto-cinza: #94a3b8;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 30px;
+    overflow: hidden; /* Evita barras de rolagem em telas de TV */
+}
+
+/* --- BOX ÚNICO E INTEGRADO (OTIMIZADO PARA TELAS GRANDES) --- */
+.painel-corporativo-unico {
+    background-color: var(--bg-painel);
+    width: 100%;
+    max-width: 1400px; /* Expandido para resoluções Full HD / 4K */
+    border-radius: 40px;
+    padding: 40px;
+    box-shadow: 0 35px 70px rgba(0, 0, 0, 0.7);
+    border: 4px solid #2d353f;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* --- TOPO / CABEÇALHO --- */
+.header-logo {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 120px;
+    background: #ffffff;
+    border-radius: 25px;
+    padding: 15px;
+}
+
+.header-logo img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+/* --- GRID DE EXIBIÇÃO DASHBOARD --- */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 2fr 2fr 1.5fr; /* 3 colunas proporcionais */
+    gap: 30px;
+    align-items: stretch;
+}
+
+/* Colunas do Painel */
+.coluna-painel {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+/* --- SEÇÕES DE TEXTO E TIPOGRAFIA AMPLIADA --- */
+.titulo-secao {
+    color: var(--texto-branco);
+    font-size: 2.2rem; /* Ampliado para leitura distante */
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.subtitulo-label {
+    color: var(--texto-cinza);
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    margin-bottom: 12px;
+    text-align: center;
+    display: block;
+}
+
+/* --- VISORES DIGITAIS (CASCATA) --- */
+.display-led-box {
+    background-color: var(--bg-display);
+    border-radius: 25px;
+    padding: 20px;
+    box-shadow: inset 0 0 30px rgba(0,0,0,0.9);
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    min-height: 250px;
+}
+
+.display-requisicao {
+    border: 4px solid var(--cor-azul-dn);
+}
+
+.display-paga {
+    border: 4px solid var(--cor-vermelho-dn);
+}
+
+.cascata-led {
+    width: 100%;
+    background: transparent;
+    border: none;
+    font-family: 'Orbitron', monospace;
+    font-size: 5rem; /* Números gigantes */
+    text-align: center;
+    outline: none;
+    cursor: pointer;
+}
+
+.display-requisicao .cascata-led {
+    color: #10b981; /* Verde digital */
+    text-shadow: 0 0 20px rgba(16, 185, 129, 0.6);
+}
+
+.display-paga .cascata-led {
+    color: #ef4444; /* Vermelho digital */
+    text-shadow: 0 0 20px rgba(239, 68, 68, 0.6);
+}
+
+.cascata-led option {
+    background-color: var(--bg-display);
+    font-family: 'Orbitron', monospace;
+    font-size: 2.5rem;
+    padding: 10px;
+}
+
+.display-requisicao option { color: #10b981; }
+.display-paga option { color: #ef4444; }
+
+/* --- COLUNA DO HISTÓRICO LATERAL INTEGRADO --- */
+.box-historico-interno {
+    background-color: rgba(0, 0, 0, 0.2);
+    border: 3px dashed #2d353f;
+    border-radius: 25px;
+    padding: 20px;
+    flex-grow: 1;
+}
+
+.lista-historico {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.item-historico {
+    background-color: var(--bg-display);
+    border-left: 6px solid var(--cor-vermelho-dn);
+    color: var(--texto-branco);
+    padding: 15px;
+    border-radius: 12px;
+    font-family: 'Orbitron', monospace;
+    font-size: 1.8rem;
+    text-align: center;
+    box-shadow: inset 0 0 15px rgba(0,0,0,0.5);
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- BARRA DE OPERAÇÃO INFERIOR COM SUB-BLOCOS EM LINHA --- */
+.controle-sistema-horizontal {
+    background: rgba(0, 0, 0, 0.4);
+    padding: 25px 30px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    display: grid;
+    grid-template-columns: 1fr 1fr auto; /* Dois grupos de inputs idênticos e o botão limpar */
+    gap: 30px;
+    align-items: end;
+}
+
+/* Agrupamento de Input + Botão */
+.grupo-operacional {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.label-operacional {
+    color: var(--texto-cinza);
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.campos-inline {
+    display: flex;
+    gap: 10px;
+}
+
+.input-requisicao {
+    flex-grow: 1;
+    padding: 16px;
+    border-radius: 12px;
+    border: 2px solid #475569;
+    background-color: #1e293b;
+    color: white;
+    font-size: 1.2rem;
+    outline: none;
+    font-weight: 700;
+    transition: border-color 0.2s;
+    width: 100%;
+}
+
+/* Foco condicional baseado na identidade do bloco */
+.input-incluir:focus { border-color: var(--cor-azul-dn); }
+.input-atender:focus { border-color: var(--cor-vermelho-dn); }
+
+.btn {
+    padding: 16px 24px;
+    border-radius: 12px;
+    border: none;
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    transition: opacity 0.2s, transform 0.1s;
+    color: var(--texto-branco);
+    white-space: nowrap;
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+.btn-inserir { background-color: var(--cor-azul-dn); }
+.btn-atender { background-color: var(--cor-vermelho-dn); }
+
+.btn-limpar { 
+    background-color: #334155; 
+    height: 56px; /* Ajustado para alinhar perfeitamente com a altura dos campos inline */
+}
+.btn-limpar:hover {
+    background-color: var(--cor-roxo-dn) !important;
+}
+
+.btn:hover { 
+    opacity: 0.9; 
+}
+
+/* Responsividade Básica para ecrãs menores */
+@media (max-width: 1100px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+    body {
+        overflow: auto;
+    }
+    .painel-corporativo-unico {
+        max-width: 100%;
+    }
+    .controle-sistema-horizontal {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    .btn-limpar {
+        width: 100%;
+    }
+}

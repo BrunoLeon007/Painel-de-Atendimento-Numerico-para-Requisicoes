@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Requisições de Alta Visibilidade - Diebold Nixdorf</title>
+    <!-- Vinculação do arquivo de estilo externo -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- CAIXA ÚNICA INTEGRADA -->
+    <div class="painel-corporativo-unico">
+        
+        <!-- Topo com o novo Logotipo DN -->
+        <div class="header-logo">
+            <img src="/assets/image.png" alt="Logo DN">
+        </div>
+
+        <!-- GRID CENTRAL: REQUISIÇÃO | REQ PAGA | HISTÓRICO -->
+        <div class="dashboard-grid">
+            
+            <!-- Coluna 1: Requisições Pendentes -->
+            <div class="coluna-painel">
+                <div class="titulo-secao">Requisição</div>
+                <span class="subtitulo-label">Pendentes</span>
+                <div class="display-led-box display-requisicao">
+                    <select id="listaRequisicao" class="cascata-led" size="1">
+                        <option value="" disabled selected>---</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Coluna 2: Requisições Atendidas/Pagas -->
+            <div class="coluna-painel">
+                <div class="titulo-secao">Req Paga</div>
+                <span class="subtitulo-label">Últimas Atendidas</span>
+                <div class="display-led-box display-paga">
+                    <select id="listaReqPaga" class="cascata-led" size="1">
+                        <option value="" disabled selected>---</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Coluna 3: Histórico Lateral Interno -->
+            <div class="coluna-painel">
+                <div class="titulo-secao">Histórico</div>
+                <span class="subtitulo-label">Últimas 5</span>
+                <div class="box-historico-interno">
+                    <ul id="historicoLateral" class="lista-historico">
+                        <li class="item-historico" style="color: #475569; border-color: #475569;">Vazio</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- BARRA INFERIOR COM LÓGICA DE DUPLO INPUT -->
+        <div class="controle-sistema-horizontal">
+            
+            <!-- Bloco Esquerdo: Lógica de Inclusão -->
+            <div class="grupo-operacional">
+                <label class="label-operacional" for="numReq">Nova Requisição</label>
+                <div class="campos-inline">
+                    <input type="text" id="numReq" class="input-requisicao input-incluir" placeholder="Nº para incluir (Ex: 101)" autocomplete="off">
+                    <button class="btn btn-inserir" onclick="adicionarReq()">Incluir</button>
+                </div>
+            </div>
+
+            <!-- Bloco Central: Lógica de Atendimento Direto -->
+            <div class="grupo-operacional">
+                <label class="label-operacional" for="reqAtender">Finalizar</label>
+                <div class="campos-inline">
+                    <input type="text" id="reqAtender" class="input-requisicao input-atender" placeholder="Nº para marcar paga" autocomplete="off">
+                    <button class="btn btn-atender" onclick="marcarComoAtendidaDireto()">Atender ✓</button>
+                </div>
+            </div>
+
+            <!-- Botão de Limpeza Geral -->
+            <button class="btn btn-limpar" onclick="limparHistorico()">🗑️ Limpar Histórico</button>
+
+        </div>
+
+    </div>
+
+    <!-- LÓGICA ATUALIZADA DO SISTEMA (JAVASCRIPT) -->
+    <script>
+        let pendentes = [];
+        let pagas = [];
+
+        // Atalhos de teclado para submeter ao carregar o Enter em cada campo respetivo
+        document.getElementById('numReq').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') adicionarReq();
+        });
+        document.getElementById('reqAtender').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') marcarComoAtendidaDireto();
+        });
+
+        function adicionarReq() {
+            const input = document.getElementById('numReq');
+            const valor = input.value.trim();
+
+            if (!valor) {
+                alert('Por favor, informe um número de requisição válido para incluir.');
+                return;
+            }
+
+            if (pendentes.includes(valor) || pagas.includes(valor)) {
+                alert('Atenção: Esta requisição já está registrada no sistema.');
+                return;
+            }
+
+            pendentes.push(valor);
+
+            // Ordenação estritamente decrescente
+            pendentes.sort((a, b) => {
+                return (isNaN(b) || isNaN(a)) ? b.localeCompare(a) : b - a;
+            });
+
+            input.value = '';
+            input.focus();
+            atualizarPaineis();
+        }
+
+        function marcarComoAtendidaDireto() {
+            const inputAtender = document.getElementById('reqAtender');
+            const valorAtender = inputAtender.value.trim();
+
+            if (!valorAtender) {
+                alert('Por favor, digite o número da requisição que deseja atender.');
+                return;
+            }
+
+            // Verifica se o elemento digitado está na lista de pendentes
+            if (!pendentes.includes(valorAtender)) {
+                if (pagas.includes(valorAtender)) {
+                    alert('Esta requisição já foi marcada como paga anteriormente.');
+                } else {
+                    alert('A requisição informada não foi encontrada na lista de pendentes. Verifique o número.');
+                }
+                return;
+            }
+
+            // Remove de pendente e adiciona no início de pagas
+            pendentes = pendentes.filter(item => item !== valorAtender);
+            pagas.unshift(valorAtender);
+
+            inputAtender.value = '';
+            inputAtender.focus();
+            atualizarPaineis();
+        }
+
+        function limparHistorico() {
+            if (pagas.length === 0) {
+                alert('O histórico já está vazio!');
+                return;
+            }
+            
+            if (confirm('Tem certeza que deseja limpar o histórico das requisições atendidas?')) {
+                pagas = [];
+                atualizarPaineis();
+            }
+        }
+
+        function atualizarPaineis() {
+            const selectPendentes = document.getElementById('listaRequisicao');
+            const selectPagas = document.getElementById('listaReqPaga');
+            const listaHistorico = document.getElementById('historicoLateral');
+
+            // 1. Atualiza Visor de Pendentes
+            selectPendentes.innerHTML = '';
+            if (pendentes.length === 0) {
+                selectPendentes.innerHTML = '<option value="" disabled selected>---</option>';
+            } else {
+                pendentes.forEach(item => {
+                    let opt = document.createElement('option');
+                    opt.value = item;
+                    opt.textContent = item;
+                    selectPendentes.appendChild(opt);
+                });
+            }
+
+            // 2. Atualiza Visor de Concluídas
+            selectPagas.innerHTML = '';
+            if (pagas.length === 0) {
+                selectPagas.innerHTML = '<option value="" disabled selected>---</option>';
+            } else {
+                pagas.forEach(item => {
+                    let opt = document.createElement('option');
+                    opt.value = item;
+                    opt.textContent = item;
+                    selectPagas.appendChild(opt);
+                });
+            }
+
+            // 3. Atualiza Caixa do Histórico das Últimas 5
+            listaHistorico.innerHTML = '';
+            if (pagas.length === 0) {
+                listaHistorico.innerHTML = '<li class="item-historico" style="color: #475569; border-color: #475569;">Vazio</li>';
+            } else {
+                const ultimasCinco = pagas.slice(0, 5);
+                ultimasCinco.forEach(item => {
+                    let li = document.createElement('li');
+                    li.className = 'item-historico';
+                    li.textContent = item;
+                    listaHistorico.appendChild(li);
+                });
+            }
+        }
+    </script>
+</body>
+</html>
