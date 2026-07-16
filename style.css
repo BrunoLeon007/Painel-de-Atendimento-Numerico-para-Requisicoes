@@ -1,3 +1,4 @@
+/* Correção do link de importação oficial do Google Fonts */
 @import url('https://googleapis.com');
 
 /* --- PALETA DE CORES OFICIAL DN --- */
@@ -20,27 +21,30 @@
 }
 
 body {
-    background-color: #ffffff;
+    background-color: #0f1114; /* Alterado para escuro para não cansar os olhos na TV e destacar o painel */
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    padding: 30px;
-    overflow: hidden; /* Evita barras de rolagem em telas de TV */
+    width: 100vw;
+    padding: 2vh 2vw; /* Margens fluidas baseadas na TV */
+    overflow: hidden; /* Força o preenchimento exato da TV sem criar barras de rolagem */
 }
 
-/* --- BOX ÚNICO E INTEGRADO (OTIMIZADO PARA TELAS GRANDES) --- */
+/* --- BOX ÚNICO E INTEGRADO (ADAPTADO EM ALTURA PARA PREENCHER A TV) --- */
 .painel-corporativo-unico {
     background-color: var(--bg-painel);
     width: 100%;
-    max-width: 1400px; /* Expandido para resoluções Full HD / 4K */
-    border-radius: 40px;
-    padding: 40px;
+    height: 95vh; /* O painel ocupa quase toda a altura vertical útil da televisão */
+    max-width: 1800px; /* Expandido para acomodar resoluções ultra-wide e 4K */
+    border-radius: 2vw; /* Bordas arredondadas proporcionais ao ecrã */
+    padding: 2.5vw;
     box-shadow: 0 35px 70px rgba(0, 0, 0, 0.7);
     border: 4px solid #2d353f;
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    justify-content: space-between; /* Distribui o cabeçalho, os visores e os botões */
+    gap: 3vh;
 }
 
 /* --- TOPO / CABEÇALHO --- */
@@ -49,10 +53,10 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 120px;
+    height: 12vh; /* Altura definida pela proporção da TV */
     background: #ffffff;
-    border-radius: 25px;
-    padding: 15px;
+    border-radius: 1.5vw;
+    padding: 1vw;
 }
 
 .header-logo img {
@@ -64,8 +68,9 @@ body {
 /* --- GRID DE EXIBIÇÃO DASHBOARD --- */
 .dashboard-grid {
     display: grid;
-    grid-template-columns: 2fr 2fr 1.5fr; /* 3 colunas proporcionais */
-    gap: 30px;
+    grid-template-columns: 2fr 2fr 1.5fr; /* 3 colunas proporcionais estáveis */
+    gap: 2.5vw;
+    flex-grow: 1; /* Estica o bloco do meio para ocupar o espaço livre da TV */
     align-items: stretch;
 }
 
@@ -79,7 +84,7 @@ body {
 /* --- SEÇÕES DE TEXTO E TIPOGRAFIA AMPLIADA --- */
 .titulo-secao {
     color: var(--texto-branco);
-    font-size: 2.2rem; /* Ampliado para leitura distante */
+    font-size: 2.2rem; 
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 3px;
@@ -101,13 +106,13 @@ body {
 /* --- VISORES DIGITAIS (CASCATA) --- */
 .display-led-box {
     background-color: var(--bg-display);
-    border-radius: 25px;
-    padding: 20px;
+    border-radius: 1.5vw;
+    padding: 2vw;
     box-shadow: inset 0 0 30px rgba(0,0,0,0.9);
     flex-grow: 1;
     display: flex;
-    align-items: center;
-    min-height: 250px;
+    align-items: center; /* Centraliza a senha verticalmente no visor da TV */
+    min-height: 200px;
 }
 
 .display-requisicao {
@@ -123,7 +128,7 @@ body {
     background: transparent;
     border: none;
     font-family: 'Orbitron', monospace;
-    font-size: 5rem; /* Números gigantes */
+    font-size: 5.5rem; /* Números gigantes para leitura de longe */
     text-align: center;
     outline: none;
     cursor: pointer;
@@ -153,8 +158,8 @@ body {
 .box-historico-interno {
     background-color: rgba(0, 0, 0, 0.2);
     border: 3px dashed #2d353f;
-    border-radius: 25px;
-    padding: 20px;
+    border-radius: 1.5vw;
+    padding: 2vw;
     flex-grow: 1;
 }
 
@@ -162,15 +167,15 @@ body {
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 1.2vh; /* Espaçamento fluido vertical */
 }
 
 .item-historico {
     background-color: var(--bg-display);
     border-left: 6px solid var(--cor-vermelho-dn);
     color: var(--texto-branco);
-    padding: 15px;
-    border-radius: 12px;
+    padding: 2vh 1vw; /* Padding vertical baseado na altura útil */
+    border-radius: 0.8vw;
     font-family: 'Orbitron', monospace;
     font-size: 1.8rem;
     text-align: center;
@@ -186,12 +191,12 @@ body {
 /* --- BARRA DE OPERAÇÃO INFERIOR COM SUB-BLOCOS EM LINHA --- */
 .controle-sistema-horizontal {
     background: rgba(0, 0, 0, 0.4);
-    padding: 25px 30px;
-    border-radius: 20px;
+    padding: 2vh 2vw;
+    border-radius: 1.5vw;
     border: 1px solid rgba(255, 255, 255, 0.05);
     display: grid;
-    grid-template-columns: 1fr 1fr auto; /* Dois grupos de inputs idênticos e o botão limpar */
-    gap: 30px;
+    grid-template-columns: 1fr 1fr auto; 
+    gap: 2vw;
     align-items: end;
 }
 
@@ -199,7 +204,7 @@ body {
 .grupo-operacional {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 0.5vh;
 }
 
 .label-operacional {
@@ -212,13 +217,13 @@ body {
 
 .campos-inline {
     display: flex;
-    gap: 10px;
+    gap: 0.8vw;
 }
 
 .input-requisicao {
     flex-grow: 1;
-    padding: 16px;
-    border-radius: 12px;
+    padding: 1.5vh 1vw;
+    border-radius: 0.8vw;
     border: 2px solid #475569;
     background-color: #1e293b;
     color: white;
@@ -229,13 +234,12 @@ body {
     width: 100%;
 }
 
-/* Foco condicional baseado na identidade do bloco */
 .input-incluir:focus { border-color: var(--cor-azul-dn); }
 .input-atender:focus { border-color: var(--cor-vermelho-dn); }
 
 .btn {
-    padding: 16px 24px;
-    border-radius: 12px;
+    padding: 1.5vh 1.8vw;
+    border-radius: 0.8vw;
     border: none;
     font-size: 1rem;
     font-weight: 700;
@@ -256,7 +260,8 @@ body {
 
 .btn-limpar { 
     background-color: #334155; 
-    height: 56px; /* Ajustado para alinhar perfeitamente com a altura dos campos inline */
+    height: auto; /* Deixa alinhar proporcionalmente com os inputs em vh */
+    padding: 1.5vh 1.8vw;
 }
 .btn-limpar:hover {
     background-color: var(--cor-roxo-dn) !important;
@@ -266,7 +271,21 @@ body {
     opacity: 0.9; 
 }
 
-/* Responsividade Básica para ecrãs menores */
+/* ==================================================================
+   REGRAS DE ESCALONAMENTO MACRO (PARA SMART TVs FULL HD, 4K OU MAIORES)
+   ================================================================== */
+@media (min-width: 1920px) {
+    .titulo-secao { font-size: 2.6vw; }
+    .subtitulo-label { font-size: 1.1vw; }
+    .cascata-led { font-size: 6.5vw; } /* Senhas massivas para visualização no salão */
+    .cascata-led option { font-size: 2.2vw; }
+    .item-historico { font-size: 2vw; padding: 2.5vh 1vw; }
+    .label-operacional { font-size: 0.9vw; }
+    .input-requisicao { font-size: 1.3vw; padding: 1.8vh 1vw; }
+    .btn { font-size: 1.1vw; padding: 1.8vh 2vw; }
+}
+
+/* Mantém compatibilidade caso alguém abra num tablet/portátil pequeno */
 @media (max-width: 1100px) {
     .dashboard-grid {
         grid-template-columns: 1fr;
@@ -276,6 +295,7 @@ body {
     }
     .painel-corporativo-unico {
         max-width: 100%;
+        height: auto;
     }
     .controle-sistema-horizontal {
         grid-template-columns: 1fr;
